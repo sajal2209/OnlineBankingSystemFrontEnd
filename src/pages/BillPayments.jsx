@@ -79,11 +79,23 @@ const BillPayments = () => {
     };
 
     const handleFetchBill = () => {
-        if (!provider || !consumerNumber) {
-            setMessage("Please fill in all details");
-            setSuccessful(false);
-            return;
-        }
+        // if (!provider || !consumerNumber) {
+        //     setMessage("Please fill in all details");
+        //     setSuccessful(false);
+        //     return;
+        // }
+          // Validation: Check if provider and consumer number are provided
+    if (!provider.trim()) {
+        setMessage("Please select a provider.");
+        setSuccessful(false);
+        return;
+    }
+
+    if (!consumerNumber.trim()) {
+        setMessage("Please enter a valid consumer number.");
+        setSuccessful(false);
+        return;
+    }
 
         setFetching(true);
         setMessage("");
@@ -209,6 +221,9 @@ const BillPayments = () => {
                 // helperText="Check your physical bill for this identifier"
                 helperText="For this DEMO, you can enter any random number (e.g., 55667788)"
             />
+
+             {/* Display error message */}
+        {message && !successful && <Alert severity="error" sx={{ mt: 2 }}>{message}</Alert>}
 
             <Button
                 variant="contained"

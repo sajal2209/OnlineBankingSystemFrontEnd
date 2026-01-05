@@ -129,6 +129,12 @@ const BankerDashboard = () => {
     };
 
     const handleDeposit = () => {
+        // Validation: Check if depositAmount is provided and is greater than 0
+    if (!depositAmount || parseFloat(depositAmount) <= 0) {
+        setMessage("Please enter a valid deposit amount greater than 0.");
+        setSuccessful(false);
+        return;
+    }
         BankerService.deposit(accountDetails.accountNumber, depositAmount).then(
             (response) => {
                 setMessage(response.data.message);
