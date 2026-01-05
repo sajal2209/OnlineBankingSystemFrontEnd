@@ -25,11 +25,28 @@ const deleteUser = (id) => {
     return axios.delete(API_URL + `users/${id}`, { headers: authHeader() });
 };
 
+const getPendingTransactions = () => {
+    return axios.get(API_URL + "pending-transactions", { headers: authHeader() });
+};
+
+const approveTransaction = (id) => {
+    return axios.put(API_URL + `transactions/${id}/approve`, {}, { headers: authHeader() });
+};
+
+const rejectTransaction = (id) => {
+    return axios.put(API_URL + `transactions/${id}/reject`, {}, { headers: authHeader() });
+};
+
+
 const AdminService = {
     getAllUsers,
     createBanker,
     toggleUserActive,
-    deleteUser
+    deleteUser,
+    getPendingTransactions,
+    approveTransaction,
+    rejectTransaction,
+
 };
 
 export default AdminService;
