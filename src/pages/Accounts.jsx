@@ -268,8 +268,14 @@ const Accounts = () => {
           </Typography>
 
           {formError && (
-            <Alert severity="error" sx={{ mb: 2 }}>
+            <Alert severity="error" sx={{ mb: 3 }}>
               {formError}
+            </Alert>
+          )}
+
+          {panError && (
+            <Alert severity="error" sx={{ mb: 3 }}>
+              {panError}
             </Alert>
           )}
 
@@ -310,13 +316,8 @@ const Accounts = () => {
             InputProps={{ sx: { borderRadius: 3 } }}
           />
 
-          {panError && (
-            <Alert severity="error" sx={{ mt: 1 }}>
-              {panError}
-            </Alert>
-          )
-
-        }{accountType === "CURRENT" && (
+          
+        {accountType === "CURRENT" && (
             <Box
               sx={{
                 mt: 2,
