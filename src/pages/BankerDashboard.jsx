@@ -130,11 +130,11 @@ const BankerDashboard = () => {
 
     const handleDeposit = () => {
         // Validation: Check if depositAmount is provided and is greater than 0
-    if (!depositAmount || parseFloat(depositAmount) <= 0) {
-        setMessage("Please enter a valid deposit amount greater than 0.");
-        setSuccessful(false);
-        return;
-    }
+        if (!depositAmount || parseFloat(depositAmount) <= 0) {
+            setMessage("Please enter a valid deposit amount greater than 0.");
+            setSuccessful(false);
+            return;
+        }
         BankerService.deposit(accountDetails.accountNumber, depositAmount).then(
             (response) => {
                 setMessage(response.data.message);
@@ -217,6 +217,7 @@ const BankerDashboard = () => {
                             value={searchAccountNumber}
                             onChange={(e) => setSearchAccountNumber(e.target.value)}
                             fullWidth
+                            inputProps={{ maxLength: 16 }}
                         />
                         <Button variant="contained" onClick={handleSearch} size="large">Search</Button>
                     </Box>

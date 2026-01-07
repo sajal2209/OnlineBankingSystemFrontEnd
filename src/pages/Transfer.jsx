@@ -157,7 +157,7 @@ const Transfer = () => {
                                         <TextField
                                             required
                                             fullWidth
-                                            placeholder="Enter 12-digit Account Number"
+                                            placeholder="Enter 16-digit Account No"
                                             value={toAccountNumber}
                                             onChange={(e) => setToAccountNumber(e.target.value)}
                                             InputProps={{
@@ -168,6 +168,7 @@ const Transfer = () => {
                                                 ),
                                                 sx: { borderRadius: 3 }
                                             }}
+                                            inputProps={{ maxLength: 16 }}
                                         />
                                     </Grid>
 
@@ -182,7 +183,9 @@ const Transfer = () => {
                                             placeholder="0.00"
                                             type="number"
                                             value={amount}
-                                            onChange={(e) => setAmount(e.target.value)}
+                                            onChange={(e) => {
+                                                if (e.target.value.length <= 7) setAmount(e.target.value);
+                                            }}
                                             InputProps={{
                                                 startAdornment: (
                                                     <InputAdornment position="start">
