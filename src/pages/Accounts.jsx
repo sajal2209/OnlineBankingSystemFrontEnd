@@ -31,6 +31,7 @@ const Accounts = () => {
   const [businessAddress, setBusinessAddress] = useState("");
   const [panCardNumber, setPanCardNumber] = useState("");
   const [panError, setPanError] = useState("");
+  const [formError, setFormError] = useState("");
 
   useEffect(() => {
     retrieveAccounts();
@@ -65,6 +66,10 @@ const Accounts = () => {
       panCardNumber,
     };
 
+    // clear previous form errors
+    setFormError("");
+    setPanError("");
+
     AccountService.createAccount(payload).then(
       (response) => {
         setMessage(response.data.message);
@@ -72,6 +77,8 @@ const Accounts = () => {
         setBusinessName(""); // Reset
         setBusinessAddress(""); // Reset
         setPanCardNumber(""); // Reset
+        setFormError("");
+        setPanError("");
         retrieveAccounts();
       },
       (error) => {
@@ -82,7 +89,15 @@ const Accounts = () => {
           error.message ||
           error.toString();
 
-        setMessage(resMessage);
+        const lower = resMessage.toLowerCase();
+
+        // If message references PAN or duplicate/exists/taken, show under PAN field
+        if (lower.includes("pan") || lower.includes("already") || lower.includes("exists") || lower.includes("taken") || lower.includes("used")) {
+          setPanError(resMessage);
+        } else {
+          // Show other form related errors inside the dialog
+          setFormError(resMessage);
+        }
       }
     );
   };
@@ -96,7 +111,7 @@ const Accounts = () => {
 
         <Button
           variant="contained"
-          onClick={() => setOpen(true)}
+          onClick={() => { setOpen(true); setMessage(""); setPanError(""); setFormError(""); }}
           startIcon={<AddCardIcon />}
           sx={{
             px: 3,
@@ -236,7 +251,7 @@ const Accounts = () => {
       {/* Open Account Dialog */}
       <Dialog
         open={open}
-        onClose={() => setOpen(false)}
+        onClose={() => { setOpen(false); setPanError(""); setFormError(""); }}
         maxWidth="sm"
         fullWidth
         PaperProps={{ sx: { borderRadius: 4, p: 1 } }}
@@ -251,6 +266,12 @@ const Accounts = () => {
             Select the account type and fill in the required details to get
             started.
           </Typography>
+
+          {formError && (
+            <Alert severity="error" sx={{ mb: 2 }}>
+              {formError}
+            </Alert>
+          )}
 
           <TextField
             select
@@ -289,7 +310,13 @@ const Accounts = () => {
             InputProps={{ sx: { borderRadius: 3 } }}
           />
 
-          {accountType === "CURRENT" && (
+          {panError && (
+            <Alert severity="error" sx={{ mt: 1 }}>
+              {panError}
+            </Alert>
+          )
+
+        }{accountType === "CURRENT" && (
             <Box
               sx={{
                 mt: 2,
