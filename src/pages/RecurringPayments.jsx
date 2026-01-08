@@ -213,8 +213,8 @@ const RecurringPayments = () => {
                       payment.status === "ACTIVE"
                         ? "success"
                         : payment.status === "STOPPED"
-                        ? "error"
-                        : "default"
+                          ? "error"
+                          : "default"
                     }
                     size="small"
                   />
@@ -267,8 +267,10 @@ const RecurringPayments = () => {
             type="text"
             fullWidth
             variant="outlined"
+            placeholder="Enter 16-digit Account Number"
             value={newPayment.targetAccountNumber}
             onChange={handleChange}
+            inputProps={{ maxLength: 16 }}
           />
           <TextField
             margin="dense"

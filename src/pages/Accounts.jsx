@@ -187,13 +187,24 @@ const Accounts = () => {
                       {/* Show Business Name if Current Account */}
                       {account.accountType === "CURRENT" &&
                         account.businessName && (
-                          <Typography
-                            variant="caption"
-                            display="block"
-                            sx={{ opacity: 0.9, fontStyle: "italic" }}
-                          >
-                            {account.businessName}
-                          </Typography>
+                          <>
+                            <Typography
+                              variant="caption"
+                              display="block"
+                              sx={{ opacity: 0.9, fontStyle: "italic", fontWeight: "bold" }}
+                            >
+                              {account.businessName}
+                            </Typography>
+                            {account.businessAddress && (
+                              <Typography
+                                variant="caption"
+                                display="block"
+                                sx={{ opacity: 0.8, fontSize: "0.7rem" }}
+                              >
+                                {account.businessAddress}
+                              </Typography>
+                            )}
+                          </>
                         )}
                     </Box>
                     <AccountBalanceWalletIcon sx={{ opacity: 0.8 }} />
