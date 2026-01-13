@@ -1,7 +1,7 @@
 import axios from "axios";
 import authHeader from "./auth-header";
 
-const API_URL = "http://localhost:8443/api/transactions/";
+const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:8443/api") + "/transactions/";
 
 const transferFunds = (fromAccountNumber, toAccountNumber, amount) => {
     return axios.post(
